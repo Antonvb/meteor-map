@@ -1,0 +1,12 @@
+body {
+    background-color: rgb(37, 45, 54);
+}
+.country {
+    fill: rgb(50, 70, 81);
+    fill-opacity: 0.9;
+}
+
+.country-boundary {
+    fill: none;
+    stroke: rgb(61, 97, 110);
+}
