@@ -21,7 +21,7 @@ export class MeteorRendererClass {
     }
 
     renderInnerCircle(data) {
-        const innerCircle = this.svgRenderer.getSvg()
+        const innerCircle = this.svgRenderer.getMapSvg()
             .selectAll('.central-circle')
             .data(data);
 
@@ -30,34 +30,41 @@ export class MeteorRendererClass {
             .remove();
 
         innerCircle
+            .attr('cx', ({reclong, reclat}) => this.projection([reclong, reclat])[0] )
+            .attr('cy', ({reclong, reclat}) => this.projection([reclong, reclat])[1] );
+
+        innerCircle
             .enter()
             .append('circle')
             .attr('cx', ({reclong, reclat}) => this.projection([reclong, reclat])[0] )
             .attr('cy', ({reclong, reclat}) => this.projection([reclong, reclat])[1] )
-            .attr('r', '4px')
+            .attr('r', '3px')
             .attr('fill', 'white')
             .attr('class', 'central-circle');
     }
 
     renderOuterCircle(data) {
-        const outerCircle = this.svgRenderer.getSvg()
+        const outerCircle = this.svgRenderer.getMapSvg()
             .selectAll('.outer-circle')
             .data(data);
+
         outerCircle
             .exit()
             .remove();
+
+        outerCircle
+            .attr('cx', ({reclong, reclat}) => this.projection([reclong, reclat])[0] )
+            .attr('cy', ({reclong, reclat}) => this.projection([reclong, reclat])[1] )
+            .attr('r', ({mass}) => this.circleScale(mass) + 'px');
 
         outerCircle
             .enter()
             .append('circle')
             .attr('cx', ({reclong, reclat}) => this.projection([reclong, reclat])[0] )
             .attr('cy', ({reclong, reclat}) => this.projection([reclong, reclat])[1] )
-            .attr('r', '0px')
+            .attr('r', ({mass}) => this.circleScale(mass) + 'px')
             .attr('fill', 'white')
             .attr('fill-opacity', 0.3)
-            .attr('class', 'outer-circle')
-            .transition()
-            .duration(200)
-            .attr('r', ({mass}) => this.circleScale(mass) + 'px');
+            .attr('class', 'outer-circle');
     }
 }

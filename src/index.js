@@ -1,6 +1,6 @@
 import '../assets/styles/index.css';
-import {transition} from 'd3-transition';
 import {MeteorMapOrchestrationClass} from "./meteor-map-orchestration.class";
+import {transition} from "d3-transition";
 
-const orchestrationClass = new MeteorMapOrchestrationClass(window.innerWidth, window.innerHeight);
+const orchestrationClass = new MeteorMapOrchestrationClass();
 orchestrationClass.render();

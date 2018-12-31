@@ -11,7 +11,9 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        new HTMLWebpackPlugin()
+        new HTMLWebpackPlugin({
+            template: path.resolve(__dirname, 'index.html')
+        })
     ],
     module: {
         rules: [
