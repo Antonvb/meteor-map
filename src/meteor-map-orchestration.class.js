@@ -28,45 +28,34 @@ export class MeteorMapOrchestrationClass {
         this.timeSelectorClass = new TimeSelectorClass(this.svgRenderer);
     }
 
-    render() {
+    async render() {
         this.svgRenderer.render();
         this.mapRenderer.render();
 
-        this.renderMeteors();
+        this.setupRenderUpdateListener();
+
+        return this.prepareAndRenderMapContext();
     }
 
-    async renderMeteors() {
+    async prepareAndRenderMapContext() {
         const meteorData = await new MeteorDataLoader(50).getData();
         const meteorDataByYearClass = new MeteorsByYearClass(meteorData);
         const years = meteorDataByYearClass.getAvailableYears();
         this.timeSelectorClass.render(years, meteorDataByYearClass.getMeteorArray());
-        this.runMeteorsByYearVisualisation(years, meteorDataByYearClass)
+        return meteorDataByYearClass;
     }
 
-    runMeteorsByYearVisualisation(years, meteorDataByYearClass) {
-        let yearIndex = 0;
-        console.log(meteorDataByYearClass);
-        const renderYearInterval = setInterval(() => {
-            const yearToRender = years[yearIndex];
-
-            if(!yearToRender) {
-                console.log('No more years available');
-                clearInterval(renderYearInterval);
-                return;
-            }
-
-            MapStateClass.sendUpdate(yearToRender, meteorDataByYearClass.meteors[yearToRender]);
-
-            this.timeSelectorClass.tick(yearToRender);
-            this.renderMeteorsForYear(yearToRender, meteorDataByYearClass);
-            yearIndex++;
-        }, 2000);
+    setupRenderUpdateListener() {
+        MapStateClass.registerCb(this.renderUpdatesForNewYear.bind(this));
     }
 
-    renderMeteorsForYear(year, meteorByYearClass) {
-        const data = meteorByYearClass.getMeteorsForYear(year);
-        console.log('Rendering year ', year);
-        this.meteorRenderer.render(data);
+    renderUpdatesForNewYear(year, meteorData) {
+        this.timeSelectorClass.tick(year);
+        this.renderMeteors(meteorData);
+    }
+
+    renderMeteors(meteors) {
+        this.meteorRenderer.render(meteors);
     }
 
 }

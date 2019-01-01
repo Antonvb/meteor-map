@@ -52,6 +52,22 @@ p {
     font-size: 12px;
 }
 
+.map-controls {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(61, 97, 110);
+}
+.map-control-buttons {
+    overflow: hidden;
+}
+.map-control-buttons button {
+    float: left;
+    width: 22%;
+    margin: 0 1%;
+    border-radius: 2px;
+    background: transparent;
+    color: white;
+}
 .year-meteor-meta {
     margin-top: 20px;
 }
