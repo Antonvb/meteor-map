@@ -31,10 +31,11 @@ export class MapRenderer {
     }
 
     setMapProperties() {
-        const { height } = this.svgRenderer.getMapDimensions();
+        const { height, width } = this.svgRenderer.getMapDimensions();
         this.projection = geoMercator()
             .scale(1)
-            .fitHeight(height, this.mapData.getMeshData());
+            .fitHeight(height, this.mapData.getMeshData())
+            .translate([width/2, height/2]);
 
         this.path = geoPath().projection(this.projection);
     }

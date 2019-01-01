@@ -1,10 +1,10 @@
-import {ascending} from 'd3-array';
+import {descending} from 'd3-array';
 
 export class MeteorsByYearClass {
 
     constructor(meteors) {
         this.meteors = MeteorsByYearClass.formatMeteorsByYears(meteors);
-        this.years = this.extractYearsFromMeteors().sort(ascending);
+        this.years = this.extractYearsFromMeteors().sort(descending);
     }
 
     getAvailableYears() {
@@ -13,6 +13,13 @@ export class MeteorsByYearClass {
 
     getMeteorsForYear(year) {
         return this.meteors[year];
+    }
+
+    getMeteorArray() {
+        return this.years.map(year => ({
+            year,
+            count: this.meteors[year] ? this.meteors[year].length : 0
+        }))
     }
 
     static formatMeteorsByYears(meteorArray) {

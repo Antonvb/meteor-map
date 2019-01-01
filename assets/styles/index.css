@@ -3,17 +3,68 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.render-container {
+    clear-after: both;
+}
+
+.render-canvas {
+    float: left;
+    width: 70%;
+    height: 100vh;
+}
+
+.render-info {
+    float: right;
+    width: 30%;
+    height: 100vh;
+    border-left: 1px solid rgb(61, 97, 110);
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+/* Map Styles */
 .country {
     fill: rgb(50, 70, 81);
     fill-opacity: 0.9;
 }
-
 .country-boundary {
     fill: none;
     stroke: rgb(61, 97, 110);
 }
 
-.render-canvas {
-    width: 70%;
-    height: 100vh;
+/* Map Meta Styles */
+h1, h2, h3, h4, h5, h6, p {
+    font-family: sans-serif;
+    color: white;
+    font-weight: 500;
+}
+h1 {
+    font-size: 20px;
+}
+h2 {
+    font-size: 16px;
+}
+h4 {
+    font-size: 14px;
+}
+p {
+    font-size: 12px;
+}
+
+.year-meteor-meta {
+    margin-top: 20px;
+}
+.current-year {
+    font-size: 24px;
+    font-weight: 200;
+}
+.meteor-meta {
+    height: 60vh;
+    overflow-y: scroll;
+}
+.single-meteor-meta {
+    padding: 10px 0;
+    margin-bottom: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
 }

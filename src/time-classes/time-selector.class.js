@@ -1,5 +1,7 @@
-import {scalePoint} from "d3-scale";
+import {scalePoint, scaleLinear} from "d3-scale";
 import {select, selectAll} from "d3-selection";
+import {extent} from "d3-array";
+import {line} from "d3-shape";
 
 export class TimeSelectorClass {
 
@@ -12,10 +14,11 @@ export class TimeSelectorClass {
     this.timeSelectorHeight = svgRenderer.getTimeSelectorDimensions().height - 20;
   }
 
-  render(years) {
+  render(years, meteorData) {
     this.timeScale.domain(years);
-
     this.drawInitialTimeSelector(years);
+
+    this.drawYearSparkLine(meteorData);
   }
 
   tick(highlightedYear) {
@@ -48,9 +51,9 @@ export class TimeSelectorClass {
       .attr('x1', year => this.timeScale(year))
       .attr('y1', year => this.isHighlightedYear(year) ? 0 : 5)
       .attr('x2', year => this.timeScale(year))
-      .attr('y2', year => this.isHighlightedYear(year) ? this.timeSelectorHeight : this.timeSelectorHeight - 5)
+      .attr('y2', () => this.timeSelectorHeight)
       .attr("stroke-width", 2)
-      .attr("stroke", year => this.isHighlightedYear(year) ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.25)')
+      .attr("stroke", year => this.isHighlightedYear(year) ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)')
       .attr('class', year => `time-selector-tick time-selector-${year}`);
 
 
@@ -84,7 +87,7 @@ export class TimeSelectorClass {
     this.timeCanvas
         .select('.highlighted')
         .classed('highlighted', false)
-        .attr("stroke", "rgba(255, 255, 255, 0.5)");
+        .attr("stroke", year => this.isHighlightedYear(year) ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.025)');
   }
 
   addHighlight(year) {
@@ -92,5 +95,27 @@ export class TimeSelectorClass {
         .select(`.time-selector-${year}`)
         .classed('highlighted', true)
         .attr('stroke', 'white');
+  }
+
+  drawYearSparkLine(meteorData) {
+    const sparkLineScale = scaleLinear()
+        .range([this.timeSelectorHeight, 0])
+        .domain(
+            extent(
+                meteorData.map(({count}) => count)
+            )
+        );
+
+    console.log(meteorData, sparkLineScale.range(), sparkLineScale.domain());
+
+    const sparkLine = line()
+        .x(({year}) => this.timeScale(year))
+        .y(({count}) => sparkLineScale(count));
+
+    this.timeCanvas
+        .append('path')
+        .attr('d', sparkLine(meteorData))
+        .attr('fill', 'none')
+        .attr('stroke', 'white')
   }
 }

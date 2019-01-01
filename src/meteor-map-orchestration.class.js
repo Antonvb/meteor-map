@@ -6,6 +6,7 @@ import {MeteorRendererClass} from "./meteor-classes/meteor-renderer.class";
 import {MeteorDataLoader} from "./meteor-classes/meteor-data-loader.class";
 import {MeteorsByYearClass} from "./meteor-classes/meteors-by-year.class";
 import {TimeSelectorClass} from "./time-classes/time-selector.class";
+import {MapStateClass} from "./map-state/map-state.class";
 
 export class MeteorMapOrchestrationClass {
 
@@ -38,12 +39,13 @@ export class MeteorMapOrchestrationClass {
         const meteorData = await new MeteorDataLoader(50).getData();
         const meteorDataByYearClass = new MeteorsByYearClass(meteorData);
         const years = meteorDataByYearClass.getAvailableYears();
-        this.timeSelectorClass.render(years);
+        this.timeSelectorClass.render(years, meteorDataByYearClass.getMeteorArray());
         this.runMeteorsByYearVisualisation(years, meteorDataByYearClass)
     }
 
     runMeteorsByYearVisualisation(years, meteorDataByYearClass) {
         let yearIndex = 0;
+        console.log(meteorDataByYearClass);
         const renderYearInterval = setInterval(() => {
             const yearToRender = years[yearIndex];
 
@@ -52,6 +54,8 @@ export class MeteorMapOrchestrationClass {
                 clearInterval(renderYearInterval);
                 return;
             }
+
+            MapStateClass.sendUpdate(yearToRender, meteorDataByYearClass.meteors[yearToRender]);
 
             this.timeSelectorClass.tick(yearToRender);
             this.renderMeteorsForYear(yearToRender, meteorDataByYearClass);
