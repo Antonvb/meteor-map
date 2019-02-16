@@ -1,6 +1,6 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-# Meteor Map for Meteors from 2013 to 1901
+# Meteor Map for Meteors from 1901 to 2013
 
 Experimenting with d3 maps and a NASA meteor data set. 
 The aim was to create an autoplay meteor visualisation that renders meteors based on their size on the map.
