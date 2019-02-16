@@ -34,6 +34,7 @@ export class TimeSelectorClass {
   }
 
   drawInitialTimeSelector(years) {
+    const thisRef = this;
     this.timeCanvas = this.svgRenderer
       .getTimeSelectorSvg()
       .append('g')
@@ -53,11 +54,30 @@ export class TimeSelectorClass {
       .attr('x2', year => this.timeScale(year))
       .attr('y2', () => this.timeSelectorHeight)
       .attr("stroke-width", 2)
-      .attr("stroke", year => this.isHighlightedYear(year) ? 'rgba(242, 140, 129, 0.2)' : 'rgba(242, 140, 129, 0.1)')
-      .attr('class', year => `time-selector-tick time-selector-${year}`);
+      .attr("stroke", year => this.getTimeStrokeColour(year))
+      .attr('class', year => `time-selector-tick time-selector-${year}`)
+      .on('mouseover', function(d) {
+        const currentLine = select(this);
 
+        currentLine
+            .attr('stroke', 'white');
 
-    const thisRef = this;
+        thisRef.timeCanvas
+            .append('text')
+            .attr('x', select(this).attr('x1'))
+            .attr('y', thisRef.timeSelectorHeight + 20)
+            .attr('text-anchor', 'middle')
+            .classed('highlighted-text year-annotation', true)
+            .text(d);
+      })
+      .on('mouseout', function() {
+        select(this)
+            .attr('stroke', (year) => thisRef.getTimeStrokeColour(year));
+
+        thisRef.timeCanvas
+            .select('.highlighted-text').remove();
+      });
+
     selectAll('.time-selector-tick').each(function(d) {
       if(!thisRef.isHighlightedYear(d)) {
         return;
@@ -68,12 +88,14 @@ export class TimeSelectorClass {
           .append('text')
           .attr('x', element.attr('x1'))
           .attr('y', thisRef.timeSelectorHeight + 20)
-          .attr('fill', 'white')
-          .attr('font-size', '12px')
-          .attr('font-family', 'sans-serif')
           .attr('text-anchor', 'middle')
+          .classed('year-annotation', true)
           .text(d);
     });
+  }
+
+  getTimeStrokeColour(year) {
+    return this.isHighlightedYear(year) ? 'rgba(242, 140, 129, 0.2)' : 'rgba(242, 140, 129, 0.1)';
   }
 
   isHighlightedYear(year) {

@@ -121,3 +121,10 @@ p {
     margin-top: 0;
     margin-bottom: 5px;
 }
+
+/* Time Selector Styles */
+.year-annotation {
+    font-size: 12px;
+    fill: white;
+    font-family: sans-serif;
+}
