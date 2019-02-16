@@ -1,6 +1,4 @@
 export class MapStateClass {
-  static instance = new MapStateClass();
-
   static updateCbs = [];
 
   static sendUpdate(newYear, newMeteors) {

@@ -8,7 +8,7 @@ export class MapControls {
     this.setupButtonListeners();
   }
 
-  setupButtonListeners(state) {
+  setupButtonListeners() {
     const selectedButtonClass = "selected";
 
     document.querySelector(".next").addEventListener("click", () => {
