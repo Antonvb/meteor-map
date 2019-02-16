@@ -22,9 +22,13 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: "eslint-loader",
+                options: {
+                    fix: true
+                }
             },
             {
                 test: /\.css$/,
+                exclude: /node_modules/,
                 use: [
                     'style-loader',
                     'css-loader'
@@ -33,13 +37,8 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                options: {
-                    plugins: [
-                        require('@babel/plugin-proposal-async-generator-functions'),
-                        require('@babel/plugin-proposal-class-properties'),
-                        require('@babel/plugin-proposal-object-rest-spread')
-                    ]
+                use: {
+                    loader: 'babel-loader'
                 }
             }
         ]
