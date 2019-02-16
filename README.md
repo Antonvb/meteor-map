@@ -1,4 +1,4 @@
-[![npm][npm-image]][npm-url][![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 # Meteor Map for Meteors from 2013 to 1901
 
