@@ -5,4 +5,4 @@ The aim was to create an autoplay meteor visualisation that renders meteors base
 
 The dataset: https://data.nasa.gov/resource/y77d-th95.json
 
-Demo:
+![](./assets/images/readme.gif)
