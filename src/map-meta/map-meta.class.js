@@ -2,13 +2,14 @@ import {MapStateClass} from "../map-state/map-state.class";
 import {select} from "d3-selection";
 
 export class MapMetaClass {
-
     yearMeta;
     meteorMeta;
+    meteorCount;
 
     constructor() {
         this.yearMeta = select('.year-meta');
         this.meteorMeta = select('.meteor-meta');
+        this.meteorCount = select('.meteor-count');
         this.setupListenerToMapStateUpdates();
     }
 
@@ -18,11 +19,12 @@ export class MapMetaClass {
 
     reactToStateUpdate(newYear, meteorsForYear) {
         this.renderNewYear(newYear);
+        this.renderMeteorCount(meteorsForYear.length);
         this.renderNewMeteors(meteorsForYear);
     }
 
     renderNewYear(newYear) {
-        this.yearMeta.html(`Showing meteors for year <span class="current-year">${newYear}</span>`);
+        this.yearMeta.html(`Showing meteors for year: <span class="current-year">${newYear}</span>`);
     }
 
     renderNewMeteors(meteors) {
@@ -30,6 +32,10 @@ export class MapMetaClass {
         for(let meteor of meteors) {
             this.renderMeteorInfo(meteor);
         }
+    }
+
+    renderMeteorCount(count) {
+        this.meteorCount.html(`Number of Meteors: <span class="meteor-count-number">${count}</span>`);
     }
 
     renderMeteorInfo(meteor) {

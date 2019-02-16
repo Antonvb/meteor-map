@@ -1,39 +1,10 @@
+/* General Styles */
 body {
-    background-color: rgb(37, 45, 54);
+    background-color: #01395C;
     margin: 0;
     padding: 0;
 }
 
-.render-container {
-    clear-after: both;
-}
-
-.render-canvas {
-    float: left;
-    width: 70%;
-    height: 100vh;
-}
-
-.render-info {
-    float: right;
-    width: 30%;
-    height: 100vh;
-    border-left: 1px solid rgb(61, 97, 110);
-    box-sizing: border-box;
-    padding: 10px;
-}
-
-/* Map Styles */
-.country {
-    fill: rgb(50, 70, 81);
-    fill-opacity: 0.9;
-}
-.country-boundary {
-    fill: none;
-    stroke: rgb(61, 97, 110);
-}
-
-/* Map Meta Styles */
 h1, h2, h3, h4, h5, h6, p {
     font-family: sans-serif;
     color: white;
@@ -52,35 +23,101 @@ p {
     font-size: 12px;
 }
 
+
+/* Container Styles */
+.render-container {
+    clear-after: both;
+}
+
+.render-canvas {
+    float: left;
+    width: 75%;
+    height: 100vh;
+}
+
+.render-info {
+    float: right;
+    width: 25%;
+    height: 100vh;
+    border-left: 1px solid rgb(61, 97, 110);
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+
+/* Map Styles */
+.country {
+    fill: #849fb2;
+    fill-opacity: 0.9;
+}
+.country-boundary {
+    fill: none;
+    stroke: #9ebfd6;
+}
+
+
+/* Map Meta Styles */
 .map-controls {
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid rgb(61, 97, 110);
 }
-.map-control-buttons {
+.button-group {
     overflow: hidden;
+    margin-bottom: 5px;
+}
+.button-group:last-child {
+    margin-bottom: 0;
 }
 .map-control-buttons button {
     float: left;
-    width: 22%;
+    width: 48%;
     margin: 0 1%;
     border-radius: 2px;
     background: transparent;
     color: white;
+    transition: background-color 0.4s ease-in-out;
+}
+.map-control-buttons button:hover {
+    background-color: rgba(242, 140, 129 , 0.3);
+    cursor: pointer;
+}
+.map-control-buttons button:focus {
+    outline: none;
+}
+.map-control-buttons .selected {
+    background-color: rgba(242, 140, 129 , 0.5);
 }
 .year-meteor-meta {
     margin-top: 20px;
+    padding-bottom: 20px;
+}
+.year-meteor-meta h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.meteor-count-number {
+    font-size: 20px;
 }
 .current-year {
     font-size: 24px;
     font-weight: 200;
 }
 .meteor-meta {
-    height: 60vh;
+    height: 80vh;
     overflow-y: scroll;
 }
 .single-meteor-meta {
-    padding: 10px 0;
+    background-color: rgba(255, 255, 255, 0.07);
+    padding: 10px;
+    border-top: 3px solid rgba(242, 140, 129, 0.7);
+    margin-bottom: 15px;
+}
+.single-meteor-meta h4 {
+    margin-top: 0;
     margin-bottom: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+.single-meteor-meta p {
+    margin-top: 0;
+    margin-bottom: 5px;
 }

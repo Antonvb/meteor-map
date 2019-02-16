@@ -53,7 +53,7 @@ export class TimeSelectorClass {
       .attr('x2', year => this.timeScale(year))
       .attr('y2', () => this.timeSelectorHeight)
       .attr("stroke-width", 2)
-      .attr("stroke", year => this.isHighlightedYear(year) ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)')
+      .attr("stroke", year => this.isHighlightedYear(year) ? 'rgba(242, 140, 129, 0.2)' : 'rgba(242, 140, 129, 0.1)')
       .attr('class', year => `time-selector-tick time-selector-${year}`);
 
 
@@ -87,14 +87,14 @@ export class TimeSelectorClass {
     this.timeCanvas
         .select('.highlighted')
         .classed('highlighted', false)
-        .attr("stroke", year => this.isHighlightedYear(year) ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.025)');
+        .attr("stroke", year => this.isHighlightedYear(year) ? 'rgba(242, 140, 129, 0.1)' : 'rgba(242, 140, 129, 0.025)');
   }
 
   addHighlight(year) {
     this.timeCanvas
         .select(`.time-selector-${year}`)
         .classed('highlighted', true)
-        .attr('stroke', 'white');
+        .attr('stroke', 'rgba(242, 140, 129)');
   }
 
   drawYearSparkLine(meteorData) {
@@ -106,8 +106,6 @@ export class TimeSelectorClass {
             )
         );
 
-    console.log(meteorData, sparkLineScale.range(), sparkLineScale.domain());
-
     const sparkLine = line()
         .x(({year}) => this.timeScale(year))
         .y(({count}) => sparkLineScale(count));
@@ -116,6 +114,6 @@ export class TimeSelectorClass {
         .append('path')
         .attr('d', sparkLine(meteorData))
         .attr('fill', 'none')
-        .attr('stroke', 'white')
+        .attr('stroke', 'rgb(242, 140, 129)')
   }
 }

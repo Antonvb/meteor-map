@@ -5,6 +5,7 @@ export class MapControlState {
     yearIndex = 0;
     yearAutoplayInterval;
     meteorData;
+    isAutoplayRunning = false;
 
     constructor(meteorData) {
         this.meteorData = meteorData;
@@ -12,6 +13,12 @@ export class MapControlState {
     }
 
     autoPlayFromIndex() {
+        if(this.isAutoplayRunning) {
+            return;
+        }
+
+        this.isAutoplayRunning = true;
+
         this.renderNextIndex();
         this.yearAutoplayInterval = setInterval(() => {
             console.log(this.yearIndex, this.meteorData.getAvailableYears().length);
@@ -36,14 +43,13 @@ export class MapControlState {
     }
 
     pauseAutoplay() {
+        this.isAutoplayRunning = false;
         clearInterval(this.yearAutoplayInterval);
     }
 
     setStateToIndex(index) {
         this.yearIndex = index;
         const yearToRender = this.meteorData.getAvailableYears()[this.yearIndex];
-        console.log('Year to render next, ', yearToRender);
-        console.log(this.meteorData.getMeteorsForYear(yearToRender));
         MapStateClass.sendUpdate(yearToRender, this.meteorData.getMeteorsForYear(yearToRender));
     }
 }
