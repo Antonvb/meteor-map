@@ -9,6 +9,9 @@ The dataset: https://data.nasa.gov/resource/y77d-th95.json
 
 ![](./assets/images/readme.gif)
 
+## Project Demo
+Access the project demo here -> http://meteor-map.s3-website-eu-west-1.amazonaws.com/
+
 ## Build Commands
 
 Executed from the projects root directory:
