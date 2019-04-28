@@ -13,6 +13,7 @@ export class SvgRendererClass {
 
   mapGroup;
   timeGroup;
+  timeLegend;
 
   constructor() {
     this.svgCanvas = select(".render-canvas");
@@ -51,6 +52,16 @@ export class SvgRendererClass {
           SvgRendererClass.timePaddingTop})`
       )
       .classed("time-group", true);
+
+    this.timeLegend = this.renderContainer
+      .append("g")
+      .attr(
+        "transform",
+        `translate(0, ${SvgRendererClass.mapHeight +
+          SvgRendererClass.timePaddingTop -
+          20})`
+      )
+      .classed("time-legend", true);
   }
 
   getMapSvg() {
@@ -59,6 +70,10 @@ export class SvgRendererClass {
 
   getTimeSelectorSvg() {
     return this.timeGroup;
+  }
+
+  getTimeLegendSvg() {
+    return this.timeLegend;
   }
 
   getMapDimensions() {

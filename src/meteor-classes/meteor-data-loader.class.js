@@ -17,7 +17,7 @@ export class MeteorDataLoader {
         meteor.year = meteor.year.substr(0, 4);
         return meteor;
       })
-      .filter(({ year }) => year > 1900);
+      .filter(({ year }) => year > 1960);
   }
 
   async fetchDataForPages() {

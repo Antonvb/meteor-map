@@ -5,7 +5,7 @@ body {
     padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1, h2, h3, h4, h5, h6, p, text {
     font-family: sans-serif;
     color: white;
     font-weight: 500;
@@ -19,7 +19,7 @@ h2 {
 h4 {
     font-size: 14px;
 }
-p {
+p, text {
     font-size: 12px;
 }
 
@@ -47,8 +47,8 @@ p {
 
 /* Map Styles */
 .country {
-    fill: #849fb2;
     fill-opacity: 0.9;
+    transition: fill 0.4s ease-in-out;
 }
 .country-boundary {
     fill: none;
@@ -127,4 +127,7 @@ p {
     font-size: 12px;
     fill: white;
     font-family: sans-serif;
+}
+.time-selector-tick:hover {
+    cursor: pointer;
 }

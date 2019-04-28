@@ -23,6 +23,7 @@ export class MapControlState {
       console.log(this.yearIndex, this.meteorData.getAvailableYears().length);
       if (this.meteorData.getAvailableYears().length < this.yearIndex) {
         console.log("No more years available");
+        this.finishState();
         this.pauseAutoplay();
         return;
       }
@@ -53,5 +54,9 @@ export class MapControlState {
       yearToRender,
       this.meteorData.getMeteorsForYear(yearToRender)
     );
+  }
+
+  finishState() {
+    MapStateClass.sendUpdate(undefined, []);
   }
 }

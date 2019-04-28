@@ -1,5 +1,6 @@
 import { MapStateClass } from "../map-state/map-state.class";
 import { select } from "d3-selection";
+import { descending } from "d3-array";
 
 export class MapMetaClass {
   yearMeta;
@@ -31,9 +32,9 @@ export class MapMetaClass {
 
   renderNewMeteors(meteors) {
     this.meteorMeta.html("");
-    for (let meteor of meteors) {
-      this.renderMeteorInfo(meteor);
-    }
+    meteors
+      .sort((a, b) => descending(a.mass, b.mass))
+      .forEach(meteor => this.renderMeteorInfo(meteor));
   }
 
   renderMeteorCount(count) {

@@ -7,6 +7,9 @@ export class TimeSelectorClass {
   timeCanvas;
   timeSelectorHeight;
 
+  countSparklineColour = "#f28c81";
+  massSparklineColour = "#ed4c3b";
+
   constructor(svgRenderer) {
     this.svgRenderer = svgRenderer;
     this.timeScale = this.setupScale();
@@ -15,10 +18,12 @@ export class TimeSelectorClass {
   }
 
   render(years, meteorData) {
+    this.drawTimeLegend();
     this.timeScale.domain(years);
     this.drawInitialTimeSelector(years);
 
     this.drawYearSparkLine(meteorData);
+    this.drawMassSparkLine(meteorData);
   }
 
   tick(highlightedYear) {
@@ -96,30 +101,26 @@ export class TimeSelectorClass {
       : "rgba(242, 140, 129, 0.1)";
   }
 
-  isHighlightedYear(year) {
-    const firstYear = year === this.timeScale.domain()[0];
-    const lastYear =
-      year === this.timeScale.domain()[this.timeScale.domain().length - 1];
-    const cleanModulo = year % 20 === 0;
-    return firstYear || lastYear || cleanModulo;
-  }
-
   removeExistingHighlight() {
     this.timeCanvas
       .select(".highlighted")
       .classed("highlighted", false)
-      .attr("stroke", year =>
-        this.isHighlightedYear(year)
-          ? "rgba(242, 140, 129, 0.1)"
-          : "rgba(242, 140, 129, 0.025)"
-      );
+      .attr("stroke", year => this.getTimeStrokeColour(year));
   }
 
   addHighlight(year) {
     this.timeCanvas
       .select(`.time-selector-${year}`)
       .classed("highlighted", true)
-      .attr("stroke", "rgba(242, 140, 129)");
+      .attr("stroke", "white");
+  }
+
+  isHighlightedYear(year) {
+    const firstYear = year === this.timeScale.domain()[0];
+    const lastYear =
+      year === this.timeScale.domain()[this.timeScale.domain().length - 1];
+    const cleanModulo = year % 20 === 0;
+    return firstYear || lastYear || cleanModulo;
   }
 
   drawYearSparkLine(meteorData) {
@@ -135,6 +136,47 @@ export class TimeSelectorClass {
       .append("path")
       .attr("d", sparkLine(meteorData))
       .attr("fill", "none")
-      .attr("stroke", "rgb(242, 140, 129)");
+      .attr("stroke", this.countSparklineColour);
+  }
+
+  drawMassSparkLine(meteorData) {
+    console.log(meteorData);
+    const sparkLineScale = scaleLinear()
+      .range([this.timeSelectorHeight, 0])
+      .domain(extent(meteorData.map(({ mass }) => mass)));
+
+    const sparkLine = line()
+      .x(({ year }) => this.timeScale(year))
+      .y(({ mass }) => sparkLineScale(mass));
+
+    this.timeCanvas
+      .append("path")
+      .attr("d", sparkLine(meteorData))
+      .attr("fill", "none")
+      .attr("stroke", this.massSparklineColour);
+  }
+
+  drawTimeLegend() {
+    this.drawLegend(0, "# Meteors", this.countSparklineColour);
+    this.drawLegend(100, "Meteor Mass", this.massSparklineColour);
+  }
+
+  drawLegend(startX, text, fill) {
+    this.svgRenderer
+      .getTimeLegendSvg()
+      .append("rect")
+      .attr("x", startX)
+      .attr("width", 10)
+      .attr("height", 10)
+      .attr("fill", fill);
+
+    this.svgRenderer
+      .getTimeLegendSvg()
+      .append("text")
+      .attr("x", startX + 15)
+      .attr("y", 10)
+      .attr("fill", "white")
+      .classed("time-legend", true)
+      .text(text);
   }
 }
